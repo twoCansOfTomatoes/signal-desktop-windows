@@ -12,7 +12,8 @@ resources:
     name: twoCansOfTomatoes/Signal-Desktop
     trigger:
       branches:
-        include: 'master'
+        include:
+        - master
 
 pool:
   vmImage: 'windows-2019'
