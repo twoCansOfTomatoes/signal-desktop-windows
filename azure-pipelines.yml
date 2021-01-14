@@ -2,7 +2,12 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
+resources:
+  repositories:
+  - repository: SignalDesktopRepo # The name used to reference this repository in the checkout step
+    type: git
+    endpoint: Signal-Public-Repositoy
+    
 trigger:
 - main
 
@@ -11,7 +16,7 @@ pool:
 
 steps:
 
-- checkout: Signal-Public-Repository
+- checkout: SignalDesktopRepo
 - task: NodeTool@0
   displayName: 'Use Node 12.13.0'
   inputs:
