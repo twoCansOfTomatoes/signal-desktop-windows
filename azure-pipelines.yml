@@ -8,7 +8,7 @@ resources:
   - repository: SignalDesktopRepo # The name used to reference this repository in the checkout step
     type: git
     endpoint: SignalPublicRepository
-    name: signalapp/Signal-Desktop
+    name: Signal-Desktop
     
 trigger:
 - main
