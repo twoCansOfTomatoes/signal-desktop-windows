@@ -8,10 +8,11 @@ resources:
   - repository: SignalDesktopRepo # The name used to reference this repository in the checkout step
     type: github
     endpoint: twoCansOfTomatoes
+    ref: 'refs/heads/master'
     name: twoCansOfTomatoes/Signal-Desktop
-    
-trigger:
-- main
+    trigger:
+      branches:
+        include: 'master'
 
 pool:
   vmImage: 'windows-2019'
