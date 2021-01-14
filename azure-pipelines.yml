@@ -1,0 +1,55 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+
+- checkout: Signal-Public-Repository
+- task: NodeTool@0
+  displayName: 'Use Node 12.13.0'
+  inputs:
+    versionSpec: 12.13.0
+
+- script: 'yarn install --frozen-lockfile'
+  displayName: 'Install dependencies'
+
+- script: 'yarn generate'
+  displayName: 'Run Grunt'
+
+- script: 'yarn lint'
+  displayName: 'Lint '
+
+- script: 'node build\grunt.js'   
+  displayName: Build
+
+- script: 'copy package.json temp.json'
+  displayName: 'Move package.Json to Temp'
+
+- script: 'del package.json'
+  displayName: 'Del Package.Json'
+
+- script: 'type temp.json | findstr /v certificateSubjectName | findstr /v certificateSha1 > package.json'
+  displayName: 'Copying Certificat'
+
+- script: 'yarn build-release'
+  displayName: 'Generate Release'
+
+- task: ArchiveFiles@2
+  displayName: 'Archive Windows-UnPacked'
+  inputs:
+    rootFolderOrFile: '$(Build.SourcesDirectory)/release/win-unpacked'
+    includeRootFolder: false
+    archiveFile: '$(Build.ArtifactStagingDirectory)/Signal-Windows-$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: Release'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    ArtifactName: Release
