@@ -8,6 +8,7 @@ resources:
   - repository: SignalDesktopRepo # The name used to reference this repository in the checkout step
     type: git
     endpoint: SignalPublicRepository
+    name: signalapp/Signal-Desktop
     
 trigger:
 - main
@@ -57,5 +58,5 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: Release'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/Signal-Windows-$(Build.BuildId).zip'
     ArtifactName: Release
