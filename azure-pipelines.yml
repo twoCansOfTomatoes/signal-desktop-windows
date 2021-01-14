@@ -6,9 +6,9 @@ name: Signal-Desktop-Windows-$(Date:yy).$(Date:MM).$(Date:dd)$(Rev:.r)
 resources:
   repositories:
   - repository: SignalDesktopRepo # The name used to reference this repository in the checkout step
-    type: git
-    endpoint: SignalPublicRepository
-    name: Signal-Desktop
+    type: github
+    endpoint: twoCansOfTomatoes
+    name: twoCansOfTomatoes/Signal-Desktop
     
 trigger:
 - main
